@@ -34,7 +34,7 @@ public class SplashScreen implements Screen{
                 ,Actions.run(new Runnable() {
                     @Override
                     public void run() {
-                        ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen()); //TODO switch to menu
+                        ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen());
                     }
                 })
         ));
