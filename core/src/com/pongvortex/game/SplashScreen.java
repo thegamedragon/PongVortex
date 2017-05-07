@@ -20,16 +20,20 @@ public class SplashScreen implements Screen{
         stage = new Stage();
         Image splash = new Image(new Texture("core/assets/Splash.jpg"));
         Image splashTitle = new Image(new Texture("core/assets/SplashTitle.png"));
+
         splash.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()); //Stretch (if needed) to cover all the screen
         splashTitle.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
-        stage.addActor(splash); //Image is an Actor. Yeah.
+        Gdx.input.setInputProcessor(stage); //To prevent another stage from having the input
+
+        stage.addActor(splash); //Image is an Actor.
         stage.addActor(splashTitle);
 
-        stage.addAction(Actions.sequence( //Up to 5 actions
+        //Do effects -> fade in and fade out
+        stage.addAction(Actions.sequence( //Up to 5 actions; Fade in and then out & switch to Main Menu
                  Actions.alpha(0)
                 ,Actions.fadeIn(1.0f)
-                ,Actions.delay(2.0f)
+                ,Actions.delay(0.0f) //TODO CHANGE BACK TO 2.0f
                 ,Actions.fadeOut(0.9f)
                 ,Actions.run(new Runnable() {
                     @Override
@@ -38,7 +42,6 @@ public class SplashScreen implements Screen{
                     }
                 })
         ));
-
     }
 
     @Override
