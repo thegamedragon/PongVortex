@@ -56,8 +56,6 @@ public class MainMenuScreen implements Screen {
 
 //        testButton.setVisible(false); //TODO MANAGE BUTTONS VIA VISIBILITY
 
-
-
         //FadeIn when switched to this.
         stage.addAction(Actions.sequence(
                  Actions.alpha(0)
@@ -124,13 +122,13 @@ public class MainMenuScreen implements Screen {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                playSingleGameButton.clicked = true;
+                playSingleGameButton.setClicked(true);
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                playSingleGameButton.clicked = false;
+                playSingleGameButton.setClicked(false);
                 if( x >= 0 && y >= 0 && x <= playSingleGameButton.getWidth() && y <= playSingleGameButton.getHeight()){
                     //TODO do button action
 

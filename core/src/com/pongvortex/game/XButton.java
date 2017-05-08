@@ -10,31 +10,35 @@ public class XButton extends Actor {
 
     private Image buttonImage;
     private Image buttonClickedImage;
-    public boolean clicked;
+    private boolean clicked;
 
     public XButton (Texture texture, float x, float y){
-        this.buttonImage = new Image(texture);
-        this.buttonClickedImage = buttonImage;
-        this.setX(x);
-        this.setY(y);
-        this.setWidth(texture.getWidth());
-        this.setHeight(texture.getHeight());
-        this.setVisible(true);
-        this.clicked = false;
-        this.buttonImage.setPosition(getX(),getY(), Align.center);
-        this.buttonClickedImage.setPosition(getX(),getY(), Align.center);
+        buttonImage = new Image(texture);
+        buttonClickedImage = buttonImage;
+        setX(x);
+        setY(y);
+        setWidth(texture.getWidth());
+        setHeight(texture.getHeight());
+        setVisible(true);
+        clicked = false;
+        buttonImage.setPosition(getX(),getY(), Align.center);
+        buttonClickedImage.setPosition(getX(),getY(), Align.center);
         setBounds(getX()-getWidth()/2,getY()-getHeight()/2,getWidth(),getHeight());
     }
 
     public void setClickedImage(Texture texture){
-        this.buttonClickedImage = new Image(texture);
-        this.buttonClickedImage.setSize(getWidth(),getHeight());
-        this.buttonClickedImage.setPosition(getX(),getY(), Align.bottomLeft);
+        buttonClickedImage = new Image(texture);
+        buttonClickedImage.setSize(getWidth(),getHeight());
+        buttonClickedImage.setPosition(getX(),getY(), Align.bottomLeft);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if(!clicked) buttonImage.draw(batch,parentAlpha);
         else buttonClickedImage.draw(batch,parentAlpha);
+    }
+
+    public void setClicked(boolean clicked){
+        this.clicked = clicked;
     }
 }
