@@ -7,4 +7,6 @@ public interface Utils {
     int DIFFICULTY_HARD = 3;
     int PLAYER_AI = 4;
     int PLAYER_HUMAN = 5;
+    int GAME_SINGLE = 6;
+    int GAME_KNOCKOUT = 7;
 }

@@ -10,7 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  */
 public class Vortex extends Actor{
 
-    static int difficulty;
+    static int difficulty = Utils.DIFFICULTY_MEDIUM;
+    static int player1 = Utils.PLAYER_AI;
+    static int player2 = Utils.PLAYER_AI;
 
     public void startVortex(){
         reset(); //Resets the game to an initial state
@@ -19,11 +21,15 @@ public class Vortex extends Actor{
     }
 
     private void reset(){
-        difficulty = Utils.DIFFICULTY_MEDIUM;
-        //TODO reset paddles and ball to the default state!!
+//        difficulty = Utils.DIFFICULTY_MEDIUM;
+//        player1=Utils.PLAYER_AI;
+//        player2=Utils.PLAYER_AI;
+        //TODO reset paddles and ball to the default state!! PERHAPS COUNTDOWN?
     }
 
     static public void setDifficulty(int difficulty_){ difficulty = difficulty_;}
+    static public void setPlayer1 (int playerType) {player1 = playerType;}
+    static public void setPlayer2 (int playerType) {player2 = playerType;}
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
