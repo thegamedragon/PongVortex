@@ -23,7 +23,7 @@ public class Vortex extends Actor{
     }
 
     public void startVortex(int difficulty, int player1, int player2){
-
+        
     }
 
     private void reset(){
