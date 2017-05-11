@@ -1,10 +1,12 @@
 package com.pongvortex.game;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /**
- * Clasa se ocupa de tot jocul in sine. I se seteaza parametrii via TODO
+ * Clasa se ocupa de tot jocul in sine. I se seteaza jucatorii
+ * via {@link Vortex#setPlayer1(int)}  si {@link Vortex#setPlayer2(int)}
  * si dificultatea via {@link Vortex#setDifficulty(int)}
  * si este apelat inceputul unui joc via {@link Vortex#startVortex()}
  */
@@ -18,6 +20,10 @@ public class Vortex extends Actor{
         reset(); //Resets the game to an initial state
 
         //Other operations
+    }
+
+    public void startVortex(int difficulty, int player1, int player2){
+
     }
 
     private void reset(){

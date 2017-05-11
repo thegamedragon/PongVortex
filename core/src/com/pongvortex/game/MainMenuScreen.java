@@ -360,6 +360,7 @@ public class MainMenuScreen implements Screen {
                     hardButton.setClicked(false);
                     Vortex.setPlayer1(Utils.PLAYER_HUMAN);
                     Vortex.setPlayer2(Utils.PLAYER_AI);
+                    Vortex.setDifficulty(Utils.DIFFICULTY_MEDIUM);
 
 
                 }
