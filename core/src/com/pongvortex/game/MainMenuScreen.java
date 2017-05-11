@@ -28,7 +28,7 @@ public class MainMenuScreen implements Screen {
     private XButton humanButton;
     private XButton AIButton;
     private XButton playButton;
-    private int state; //goes to Utils.GAME_SINGLE or Utils.GAME_KNOCKOUT
+    private int state; //goes to Utils.GAME_SINGLE or Utils.GAME_KNOCKOUT TODO this
     private XButton backButton;
     @Override
     public void show() {
@@ -387,6 +387,17 @@ public class MainMenuScreen implements Screen {
                 playButton.setClicked(false);
                 if( x >= 0 && y >= 0 && x <= playButton.getWidth() && y <= playButton.getHeight()){
                     //TODO do button action
+
+                    stage.addAction(Actions.sequence(
+                            Actions.alpha(1)
+                            ,Actions.fadeOut(0.75f)
+                            ,Actions.run(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ((Game) Gdx.app.getApplicationListener()).setScreen(new PlaySingleGameScreen());
+                                }
+                            })
+                    ));
                 }
                 //((Game) Gdx.app.getApplicationListener()).setScreen(new PlaySingleGameScreen());
 

@@ -16,6 +16,10 @@ public class Vortex extends Actor{
     static int player1 = Utils.PLAYER_AI;
     static int player2 = Utils.PLAYER_AI;
 
+    Ball ball = new Ball();
+    public Paddle greenPaddle = new Paddle(Utils.GREEN);
+    public Paddle redPaddle = new Paddle(Utils.RED);
+
     public void startVortex(){
         reset(); //Resets the game to an initial state
 
@@ -40,12 +44,17 @@ public class Vortex extends Actor{
     @Override
     public void draw(Batch batch, float parentAlpha) {
 //        draw() for each object
-
+        ball.draw(batch, parentAlpha);
+        greenPaddle.draw(batch, parentAlpha);
+        redPaddle.draw(batch, parentAlpha);
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
 //        act() for each object
+        ball.act(delta);
+        greenPaddle.act(delta);
+        redPaddle.act(delta);
     }
 }
