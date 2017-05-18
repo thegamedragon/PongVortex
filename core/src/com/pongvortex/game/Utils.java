@@ -9,4 +9,6 @@ public interface Utils {
     int PLAYER_HUMAN = 5;
     int GAME_SINGLE = 6;
     int GAME_KNOCKOUT = 7;
+    int GREEN = 8;
+    int RED = 9;
 }
