@@ -18,7 +18,7 @@ public class Vortex extends Actor{
     static int player1 = Utils.PLAYER_AI;
     static int player2 = Utils.PLAYER_AI;
 
-    Ball ball = new Ball();
+    Ball ball = new Ball(this);
     public Paddle greenPaddle = new Paddle(Utils.GREEN);
     public Paddle redPaddle = new Paddle(Utils.RED);
 
@@ -59,7 +59,7 @@ public class Vortex extends Actor{
         greenPaddle.act(delta);
         redPaddle.act(delta);
         checkInGame();
-        CollisionDetect();
+        //CollisionDetect();
     }
 
     public void checkInGame(){
@@ -105,6 +105,29 @@ public class Vortex extends Actor{
             reflect(greenPaddle.angle);
             ball.ballColor = Utils.GREEN;
         }
+    }
+
+    public boolean CollisionDetectB() {
+
+        float d1 = distanta(ball.xCentru, ball.yCentru, redPaddle.dot1x, redPaddle.dot1y);
+        float d2 = distanta(ball.xCentru, ball.yCentru, redPaddle.dot2x, redPaddle.dot2y);
+        float d3 = distanta(redPaddle.dot1x, redPaddle.dot1y, redPaddle.dot2x, redPaddle.dot2y);
+
+        float d4 = distanta(ball.xCentru, ball.yCentru, greenPaddle.dot1x, greenPaddle.dot1y);
+        float d5 = distanta(ball.xCentru, ball.yCentru, greenPaddle.dot2x, greenPaddle.dot2y);
+        float d6 = distanta(greenPaddle.dot1x, greenPaddle.dot1y, greenPaddle.dot2x, greenPaddle.dot2y);
+
+        if( d1+d2<d3+4 && d1+d2>d3-4 && ball.ballColor==Utils.GREEN) {
+            reflect(redPaddle.angle);
+            ball.ballColor = Utils.RED;
+            return true;
+        }
+        if( d4+d5<d6+4 && d4+d5>d6-4 && ball.ballColor==Utils.RED) {
+            reflect(greenPaddle.angle);
+            ball.ballColor = Utils.GREEN;
+            return true;
+        }
+        return false;
     }
 
     public float distanta(float x1, float y1, float x2, float y2) {
