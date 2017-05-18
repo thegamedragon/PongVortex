@@ -12,7 +12,7 @@ public class Ball {
     public int ballColor = Utils.GREEN;
     public float speedX = 0;
     public float speedY = 0;
-    public float speedModifier = 6;
+    public float speedModifier = 1;
     public boolean inGame = false;
     private Vortex vortex;
 

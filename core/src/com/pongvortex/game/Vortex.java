@@ -84,7 +84,7 @@ public class Vortex extends Actor{
         float raza = distanta(ball.xCentru, ball.yCentru, ball.xCentru-ball.speedX, ball.yCentru-ball.speedY);
         ball.speedX = raza * (float)Math.cos( Math.toRadians(unghi+180));
         ball.speedY = raza * (float)Math.sin( Math.toRadians(unghi+180));
-        ball.speedModifier += ball.speedModifier*0.05 ;
+        if(ball.speedModifier < 5.0f) ball.speedModifier += ball.speedModifier*0.05 ;
     }
 
     public void CollisionDetect() {

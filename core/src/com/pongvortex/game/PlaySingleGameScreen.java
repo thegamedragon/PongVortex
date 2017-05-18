@@ -75,17 +75,17 @@ public class PlaySingleGameScreen implements Screen{
 
     public void pollKeyListener(){
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.UP)){
-            vortex.greenPaddle.moveLeft(Gdx.graphics.getDeltaTime());
+            vortex.redPaddle.moveRight(Gdx.graphics.getDeltaTime());
         }
         else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            vortex.greenPaddle.moveRight(Gdx.graphics.getDeltaTime());
+            vortex.redPaddle.moveLeft(Gdx.graphics.getDeltaTime());
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.S)){
-            vortex.redPaddle.moveLeft(Gdx.graphics.getDeltaTime());
+            vortex.greenPaddle.moveRight(Gdx.graphics.getDeltaTime());
         }
         else if(Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.W)){
-            vortex.redPaddle.moveRight(Gdx.graphics.getDeltaTime());
+            vortex.greenPaddle.moveLeft(Gdx.graphics.getDeltaTime());
         }
         if(Gdx.input.isKeyPressed(Input.Keys.R)) {
             vortex.ball.x = 364;
