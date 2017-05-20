@@ -29,7 +29,7 @@ public class PlaySingleGameScreen implements Screen{
         stage.addActor(backgroundField);
         stage.addActor(vortex);
 
-        vortex.startVortex(Utils.DIFFICULTY_MEDIUM,Utils.PLAYER_AI,Utils.PLAYER_AI);
+        vortex.startVortex();
 
         //FadeIn when switched to this.
         stage.addAction(Actions.sequence(
@@ -43,7 +43,6 @@ public class PlaySingleGameScreen implements Screen{
         Gdx.gl20.glClearColor(0.0f,0.0f,0.0f,1.0f);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        pollKeyListener();
         stage.act(delta);
         stage.draw();
     }
@@ -73,41 +72,4 @@ public class PlaySingleGameScreen implements Screen{
         stage.dispose();
     }
 
-    public void pollKeyListener(){
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.UP)){
-            vortex.redPaddle.moveRight(Gdx.graphics.getDeltaTime());
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            vortex.redPaddle.moveLeft(Gdx.graphics.getDeltaTime());
-        }
-
-        if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.S)){
-            vortex.greenPaddle.moveRight(Gdx.graphics.getDeltaTime());
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.W)){
-            vortex.greenPaddle.moveLeft(Gdx.graphics.getDeltaTime());
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.R)) {
-            vortex.ball.x = 364;
-            vortex.ball.y = 346;
-            vortex.ball.inGame = false;
-            vortex.redPaddle.inGame = false;
-            vortex.greenPaddle.inGame = false;
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            // START BILA
-            vortex.ball.inGame = true;
-            vortex.redPaddle.inGame = true;
-            vortex.greenPaddle.inGame = true;
-
-            if(vortex.ball.ballColor == Utils.GREEN){
-                vortex.ball.speedX = 300;
-                vortex.ball.speedY = 0;
-            }
-            else{
-                vortex.ball.speedX = -300;
-                vortex.ball.speedY = 0;
-            }
-        }
-    }
 }

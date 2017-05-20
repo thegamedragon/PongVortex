@@ -11,4 +11,5 @@ public interface Utils {
     int GAME_KNOCKOUT = 7;
     int GREEN = 8;
     int RED = 9;
+    int SCREEN_MENU = 10;
 }

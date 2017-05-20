@@ -15,6 +15,7 @@ public class Paddle {
     public boolean inGame = false;
     public int paddleColor;
     public int score=0;
+    public int speed = 80;
 
     public Paddle(int paddleType){
         paddleColor = paddleType;
@@ -87,19 +88,19 @@ public class Paddle {
         sprite.draw(batch,parentAlpha);
     }
 
-    public void moveLeft(float delta){ //TODO change 80 to something AI-difficulty related (and set player speed to highest)
-        angle -= 80 * delta;
+    public void moveClockwise(float delta){ //TODO change 80 to something AI-difficulty related (and set player speed to highest)
+        angle -= speed * delta;
         if(angle>360)
-            angle=0+80 * delta;
+            angle=0+speed * delta;
         if(angle<0)
-            angle=360-80 * delta;
+            angle=360-speed * delta;
     }
 
-    public void moveRight(float delta){
-        angle += 80 * delta;
+    public void moveCounterclockwise(float delta){
+        angle += speed * delta;
         if(angle>360)
-            angle=0+80 * delta;
+            angle=0+speed * delta;
         if(angle<0)
-            angle=360-80 * delta;
+            angle=360-speed * delta;
     }
 }

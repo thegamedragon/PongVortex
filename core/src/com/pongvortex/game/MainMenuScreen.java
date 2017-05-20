@@ -18,6 +18,8 @@ public class MainMenuScreen implements Screen {
     private static final int COL_RIGHT_X = 1150;
     private Stage stage;
     private Image background;
+    private Image field;
+    private Vortex vortex;
     private XButton testButton; //TODO remove any TestButton
     private XButton playSingleGameButton;
     private XButton playKnockoutTournament;
@@ -37,7 +39,7 @@ public class MainMenuScreen implements Screen {
 
         stage.addActor(background);
         stage.addActor(testButton);
-
+        stage.addActor(field);
         stage.addActor(playSingleGameButton);
         stage.addActor(playKnockoutTournament);
         stage.addActor(exitButton);
@@ -48,6 +50,10 @@ public class MainMenuScreen implements Screen {
         stage.addActor(AIButton);
         stage.addActor(playButton);
         stage.addActor(backButton);
+
+        vortex = new Vortex();
+        stage.addActor(vortex);
+        vortex.startVortex(Utils.DIFFICULTY_MEDIUM,Utils.PLAYER_AI,Utils.PLAYER_AI);
 
 
 //        TODO move initializations to their own init function (incl and esp buttons) for code simplicity
@@ -69,6 +75,12 @@ public class MainMenuScreen implements Screen {
         stage.addAction(Actions.sequence(
                  Actions.alpha(0)
                 ,Actions.fadeIn(0.5f)
+                ,Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        vortex.start();
+                    }
+                })
         ));
     }
 
@@ -111,6 +123,7 @@ public class MainMenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         background = new Image (new Texture("core/assets/Background.jpg"));
         background.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight()); // Stretch if needed
+        field = new Image(new Texture("core/assets/CircleField.png"));
 
         //Load buttons:
         testButton = new XButton(new Texture("core/assets/testButton.png"),500,500);
@@ -179,6 +192,9 @@ public class MainMenuScreen implements Screen {
                     AIButton.setVisible(true);
                     playButton.setVisible(true);
                     backButton.setVisible(true);
+                    Vortex.setDifficulty(Utils.DIFFICULTY_MEDIUM);
+                    Vortex.setPlayer1(Utils.PLAYER_HUMAN);
+                    Vortex.setPlayer2(Utils.PLAYER_AI);
                 }
                 //((Game) Gdx.app.getApplicationListener()).setScreen(new PlaySingleGameScreen());
 
@@ -241,6 +257,8 @@ public class MainMenuScreen implements Screen {
                     mediumButton.setClicked(false);
                     hardButton.setClicked(false);
                     Vortex.setDifficulty(Utils.DIFFICULTY_EASY);
+                    Vortex.setPlayer1(Utils.PLAYER_HUMAN);
+                    Vortex.setPlayer2(Utils.PLAYER_AI);
                 }
                 else {
                     if(easyButton.getPreviousClicked())
@@ -267,6 +285,8 @@ public class MainMenuScreen implements Screen {
                     easyButton.setClicked(false);
                     hardButton.setClicked(false);
                     Vortex.setDifficulty(Utils.DIFFICULTY_MEDIUM);
+                    Vortex.setPlayer1(Utils.PLAYER_HUMAN);
+                    Vortex.setPlayer2(Utils.PLAYER_AI);
 
                 }
                 else {
@@ -294,6 +314,8 @@ public class MainMenuScreen implements Screen {
                     easyButton.setClicked(false);
                     mediumButton.setClicked(false);
                     Vortex.setDifficulty(Utils.DIFFICULTY_HARD);
+                    Vortex.setPlayer1(Utils.PLAYER_HUMAN);
+                    Vortex.setPlayer2(Utils.PLAYER_AI);
 
                 }
                 else {

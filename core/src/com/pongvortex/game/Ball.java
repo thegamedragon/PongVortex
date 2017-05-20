@@ -26,25 +26,27 @@ public class Ball {
 
     public void act(float delta){ //Called every frame
         if(inGame==true){
-            /*x += speedX * delta * speedModifier;
+            x += speedX * delta * speedModifier;
             y += speedY * delta * speedModifier;
             xCentru = x+14;
             yCentru = y+14;
-            vortex.CollisionDetect();*/
-            float i;
-            for(i = 0.0f; i <= delta ; i+=0.00001f){
-                x += speedX * 0.00001f * speedModifier;
-                y += speedY * 0.00001f * speedModifier;
-                xCentru = x+14;
-                yCentru = y+14;
-                if(vortex.CollisionDetectB() == true){
-                    x += speedX * (delta - i) * speedModifier;
-                    y += speedY * (delta - i) * speedModifier;
-                    xCentru = x+14;
-                    yCentru = y+14;
-                    break;
-                }
-            }
+            vortex.CollisionDetect();
+
+
+//            float i;
+//            for(i = 0.0f; i <= delta ; i+=0.00001f){
+//                x += speedX * 0.00001f * speedModifier;
+//                y += speedY * 0.00001f * speedModifier;
+//                xCentru = x+14;
+//                yCentru = y+14;
+//                if(vortex.CollisionDetectB() == true){
+//                    x += speedX * (delta - i) * speedModifier;
+//                    y += speedY * (delta - i) * speedModifier;
+//                    xCentru = x+14;
+//                    yCentru = y+14;
+//                    break;
+//                }
+//            }
         }
         else{
 
