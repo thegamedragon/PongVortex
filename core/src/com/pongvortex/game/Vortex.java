@@ -2,9 +2,13 @@ package com.pongvortex.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import static java.lang.Math.random;
 import static java.lang.Math.sqrt;
@@ -35,6 +39,9 @@ public class Vortex extends Actor{
     private float targetAngleRed = 180.0f;
     private float targetAngleGreen = 0.0f;
 
+    public Image greenScore = new Image(new Texture("core/assets/GREEN/0.png"));
+    public Image redScore = new Image (new Texture ("core/assets/RED/0.png"));
+
     public void startVortex(){
         reset(); //Resets the game to an initial state
         //if(player1 == Utils.PLAYER_AI) greenPaddle.speed = 15;
@@ -45,6 +52,7 @@ public class Vortex extends Actor{
             if(difficulty == Utils.DIFFICULTY_MEDIUM) redPaddle.speed = 15;
             if(difficulty == Utils.DIFFICULTY_HARD) redPaddle.speed = 30;
         }
+        if(player2 == Utils.PLAYER_HUMAN) redPaddle.speed = 40;
         if(player1 == Utils.PLAYER_AI) {
             greenPaddle.speed = 50;
             redPaddle.speed = 50;
@@ -53,6 +61,9 @@ public class Vortex extends Actor{
         currentPlayer1 = player1;
         currentPlayer2 = player2;
         //Other operations
+
+        greenScore.setPosition(908,365);
+        redScore.setPosition(1008,365);
     }
 
     public void startVortex(int difficulty, int player1, int player2){
@@ -76,6 +87,10 @@ public class Vortex extends Actor{
         ball.draw(batch, parentAlpha);
         greenPaddle.draw(batch, parentAlpha);
         redPaddle.draw(batch, parentAlpha);
+        if(currentPlayer1==Utils.PLAYER_HUMAN){
+            greenScore.draw(batch,parentAlpha);
+            redScore.draw(batch,parentAlpha);
+        }
     }
 
     @Override
@@ -116,11 +131,15 @@ public class Vortex extends Actor{
     }
 
     public void setScore(){
-        if(ball.ballColor==Utils.GREEN)
+        if(ball.ballColor==Utils.GREEN){
             greenPaddle.score++;
-        else
+            greenScore.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/GREEN/"+greenPaddle.score+".png"))));
+        }
+        else{
             redPaddle.score++;
-        System.out.println("GREEN : " + greenPaddle.score + " - " + redPaddle.score + " : RED\n");
+            redScore.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/RED/"+redPaddle.score+".png"))));
+        }
+//        System.out.println("GREEN : " + greenPaddle.score + " - " + redPaddle.score + " : RED\n");
     }
 
     public void reflect(float unghi) {
@@ -299,5 +318,8 @@ public class Vortex extends Actor{
             ball.speedX = -300;
             ball.speedY = 0;
         }
+        changeRandom = true;
+        targetAngleRed = 180.0f;
+        targetAngleGreen = 0.0f;
     }
 }

@@ -1,14 +1,17 @@
 package com.pongvortex.game;
 
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class PlaySingleGameScreen implements Screen{
 
@@ -16,6 +19,8 @@ public class PlaySingleGameScreen implements Screen{
     private Image background;
     private Image backgroundField;
     private Vortex vortex;
+    private Image teamScore;
+    private XButton backButton;
 
     @Override
     public void show() {
@@ -23,11 +28,20 @@ public class PlaySingleGameScreen implements Screen{
         Gdx.input.setInputProcessor(stage);
         background = new Image (new Texture("core/assets/Background.jpg"));
         backgroundField = new Image (new Texture("core/assets/CircleField.png"));
+        teamScore = new Image(new Texture("core/assets/Score.png"));
         vortex = new Vortex();
+
+        backButton = new XButton(new Texture("core/assets/Back.png"),995.0f,200.0f);
+        backButton.setClickedImage(new Texture("core/assets/BackClicked.png"));
+        backButton.setVisible(true);
+
+        setButtonActions();
 
         stage.addActor(background);
         stage.addActor(backgroundField);
         stage.addActor(vortex);
+        stage.addActor(teamScore);
+        stage.addActor(backButton);
 
         vortex.startVortex();
 
@@ -72,4 +86,33 @@ public class PlaySingleGameScreen implements Screen{
         stage.dispose();
     }
 
+
+    private void setButtonActions(){
+        backButton.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                backButton.setClicked(true);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                backButton.setClicked(false);
+                if( x >= 0 && y >= 0 && x <= backButton.getWidth() && y <= backButton.getHeight()){
+                    //TODO do button action
+                    stage.addAction(Actions.sequence(
+                             Actions.alpha(1.0f)
+                            ,Actions.fadeOut(0.5f)
+                            ,Actions.run(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen());
+                                }
+                            })
+                    ));
+                }
+                //((Game) Gdx.app.getApplicationListener()).setScreen(new PlaySingleGameScreen());
+            }
+        });
+    }
 }

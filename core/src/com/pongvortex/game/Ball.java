@@ -52,6 +52,8 @@ public class Ball {
 
             x = 364;
             y = 346;
+            xCentru = x+14;
+            yCentru = y+14;
             speedX = 0;
             speedY = 0;
         }
