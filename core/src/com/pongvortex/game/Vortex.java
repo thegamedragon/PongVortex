@@ -25,10 +25,12 @@ public class Vortex extends Actor{
     static int difficulty = Utils.DIFFICULTY_MEDIUM;
     static int player1 = Utils.PLAYER_HUMAN;
     static int player2 = Utils.PLAYER_AI;
+    static int bestOf = 1;
 
     int currentDifficulty = Utils.DIFFICULTY_MEDIUM;
     int currentPlayer1 = Utils.PLAYER_HUMAN;
     int currentPlayer2 = Utils.PLAYER_AI;
+    int currentBestOf = 1;
 
     static int screen = Utils.SCREEN_MENU;
 
@@ -41,14 +43,20 @@ public class Vortex extends Actor{
 
     public Image greenScore = new Image(new Texture("core/assets/GREEN/0.png"));
     public Image redScore = new Image (new Texture ("core/assets/RED/0.png"));
+
+    public Image greenSetScore = new Image(new Texture("core/assets/GREEN/0.png"));
+    public Image redSetScore = new Image(new Texture("core/assets/RED/0.png"));
+
     private Image greenVictory = new Image(new Texture("core/assets/GreenVictoryBlack.png"));
     private Image redVictory = new Image(new Texture("core/assets/RedVictoryBlack.png"));
     private PlaySingleGameScreen gameScreen;
+
+
+    // Common in all constructors
     {
         redVictory.setVisible(false);
         greenVictory.setVisible(false);
         screen = Utils.SCREEN_MENU;
-        setButtonActions();
     }
 
     public Vortex(){
@@ -60,7 +68,6 @@ public class Vortex extends Actor{
     }
 
     public void startVortex(){
-        reset(); //Resets the game to an initial state
         //if(player1 == Utils.PLAYER_AI) greenPaddle.speed = 15;
         if(player1 == Utils.PLAYER_HUMAN) greenPaddle.speed = 40;
 
@@ -77,10 +84,14 @@ public class Vortex extends Actor{
         currentDifficulty = difficulty;
         currentPlayer1 = player1;
         currentPlayer2 = player2;
+        currentBestOf = bestOf;
         //Other operations
 
         greenScore.setPosition(908,365);
         redScore.setPosition(1008,365);
+
+        greenSetScore.setPosition(908,150);
+        redSetScore.setPosition(1008,150);
     }
 
     public void startVortex(int difficulty, int player1, int player2){
@@ -90,15 +101,10 @@ public class Vortex extends Actor{
         startVortex();
     }
 
-    private void reset(){
-        //TODO reset paddles and ball to the default state!! PERHAPS COUNTDOWN?
-
-
-    }
-
     static public void setDifficulty(int difficulty_){ difficulty = difficulty_;}
     static public void setPlayer1 (int playerType) {player1 = playerType;}
     static public void setPlayer2 (int playerType) {player2 = playerType;}
+    static public void setBestOf (int bestOfValue) {bestOf = bestOfValue;}
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -109,12 +115,16 @@ public class Vortex extends Actor{
         if(currentPlayer1==Utils.PLAYER_HUMAN){
             greenScore.draw(batch,parentAlpha);
             redScore.draw(batch,parentAlpha);
+            if(currentBestOf > 1){
+                greenSetScore.draw(batch, parentAlpha);
+                redSetScore.draw(batch, parentAlpha);
+            }
             if(redVictory.isVisible()) {
                 redVictory.draw(batch,parentAlpha);
                 //gameScreen.playAgainButton.draw(batch,parentAlpha);
                 //gameScreen.mainMenuButton.draw(batch, parentAlpha);
             }
-            if(greenVictory.isVisible()){
+            else if(greenVictory.isVisible()){
                 greenVictory.draw(batch,parentAlpha);
                 //gameScreen.playAgainButton.draw(batch,parentAlpha);
                 //gameScreen.mainMenuButton.draw(batch, parentAlpha);
@@ -149,7 +159,7 @@ public class Vortex extends Actor{
             targetAngleRed = 0.0f;
             if(screen == Utils.SCREEN_MENU) {
                 getStage().addAction(Actions.sequence(
-                         Actions.delay(1.0f)
+                         Actions.delay(1.25f)
                         ,Actions.run(new Runnable() {
                             @Override
                             public void run() {
@@ -165,24 +175,52 @@ public class Vortex extends Actor{
         if(ball.ballColor==Utils.GREEN){
             if(currentPlayer1==Utils.PLAYER_HUMAN) greenPaddle.score++;
             greenScore.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/GREEN/"+greenPaddle.score+".png"))));
+
         }
         else if(ball.ballColor==Utils.RED){
             if(currentPlayer1==Utils.PLAYER_HUMAN) redPaddle.score++;
             redScore.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/RED/"+redPaddle.score+".png"))));
         }
         if(greenPaddle.score == 11){
+//            greenVictory.setVisible(true);
+//            screen = Utils.SCREEN_VICTORY;
+//            gameScreen.playAgainButton.setVisible(true);
+//            gameScreen.mainMenuButton.setVisible(true);
+            greenPaddle.setScore++;
+            greenPaddle.score = 0; redPaddle.score = 0;
+            greenSetScore.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/GREEN/"+greenPaddle.setScore+".png"))));
+            redScore.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/RED/"+redPaddle.score+".png"))));
+            greenScore.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/GREEN/"+greenPaddle.score+".png"))));
+        }
+        else if (redPaddle.score == 11){
+//            redVictory.setVisible(true);
+//            screen = Utils.SCREEN_VICTORY;
+//            gameScreen.playAgainButton.setVisible(true);
+//            gameScreen.mainMenuButton.setVisible(true);
+            redPaddle.setScore++;
+            redPaddle.score = 0; greenPaddle.score = 0;
+            redSetScore.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/RED/"+redPaddle.setScore+".png"))));
+            redScore.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/RED/"+redPaddle.score+".png"))));
+            greenScore.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/GREEN/"+greenPaddle.score+".png"))));
+
+        }
+        if(greenPaddle.setScore >= (currentBestOf/2+1) ){
             greenVictory.setVisible(true);
             screen = Utils.SCREEN_VICTORY;
             gameScreen.playAgainButton.setVisible(true);
             gameScreen.mainMenuButton.setVisible(true);
 
         }
-        else if (redPaddle.score == 11){
+        else if(redPaddle.setScore >= (currentBestOf/2+1) ){
             redVictory.setVisible(true);
             screen = Utils.SCREEN_VICTORY;
             gameScreen.playAgainButton.setVisible(true);
             gameScreen.mainMenuButton.setVisible(true);
+
         }
+
+
+
 //        System.out.println("GREEN : " + greenPaddle.score + " - " + redPaddle.score + " : RED\n");
     }
 
@@ -309,7 +347,10 @@ public class Vortex extends Actor{
         }}
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            start();
+            //FOR DEBUG, COMMENT THE IF
+//            if((redPaddle.score == 0 && greenPaddle.score == 0) && !ball.inGame )
+                start();
+
         }
     }
 
@@ -349,6 +390,7 @@ public class Vortex extends Actor{
         return (float)  (Math.atan2(y_i, x_i) * (180 / Math.PI));
     }
     void start(){
+        //if((redPaddle.score != 0 && greenPaddle.score != 0) || ball.inGame) return;
         // START BILA
         if(screen == Utils.SCREEN_VICTORY) return;
 
@@ -356,6 +398,25 @@ public class Vortex extends Actor{
         ball.inGame = true;
         redPaddle.inGame = true;
         greenPaddle.inGame = true;
+
+//        ball.x = 364;
+//        ball.y = 346;
+//
+//        greenPaddle.x = 45;
+//        greenPaddle.y = 280;
+//        greenPaddle.angle = 180.0f;
+//        greenPaddle.dot1x = 76;
+//        greenPaddle.dot1y = 285;
+//        greenPaddle.dot2x = 76;
+//        greenPaddle.dot2y = 436;
+//
+//        redPaddle.x = 675;
+//        redPaddle.y = 280;
+//        redPaddle.angle = 0.0f;
+//        redPaddle.dot1x = 677;
+//        redPaddle.dot1y = 285;
+//        redPaddle.dot2x = 677;
+//        redPaddle.dot2y = 436;
 
         if(ball.ballColor == Utils.GREEN){
             ball.speedX = 300;
@@ -368,11 +429,5 @@ public class Vortex extends Actor{
         changeRandom = true;
         targetAngleRed = 180.0f;
         targetAngleGreen = 0.0f;
-    }
-
-    public void setButtonActions(){
-
-
-
     }
 }

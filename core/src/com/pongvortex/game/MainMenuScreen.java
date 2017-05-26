@@ -30,6 +30,9 @@ public class MainMenuScreen implements Screen {
     private XButton humanButton;
     private XButton AIButton;
     private XButton playButton;
+    private XButton bestOf3;
+    private XButton bestOf5;
+    private XButton bestOf7;
     private int state; //goes to Utils.GAME_SINGLE or Utils.GAME_KNOCKOUT TODO this
     private XButton backButton;
     @Override
@@ -50,6 +53,9 @@ public class MainMenuScreen implements Screen {
         stage.addActor(AIButton);
         stage.addActor(playButton);
         stage.addActor(backButton);
+        stage.addActor(bestOf3);
+        stage.addActor(bestOf5);
+        stage.addActor(bestOf7);
 
         vortex = new Vortex();
         stage.addActor(vortex);
@@ -143,20 +149,20 @@ public class MainMenuScreen implements Screen {
         exitButton.setVisible(true);
 
         //Group 2
-        easyButton = new XButton(new Texture("core/assets/Easy.png"),COL_RIGHT_X,450);
+        easyButton = new XButton(new Texture("core/assets/Easy.png"),COL_RIGHT_X,500);
         easyButton.setClickedImage(new Texture("core/assets/EasyClicked.png"));
 
-        mediumButton = new XButton(new Texture("core/assets/Medium.png"),COL_RIGHT_X,390);
+        mediumButton = new XButton(new Texture("core/assets/Medium.png"),COL_RIGHT_X,440);
         mediumButton.setClickedImage(new Texture("core/assets/MediumClicked.png"));
         mediumButton.setClicked(true);
 
-        hardButton = new XButton(new Texture("core/assets/Hard.png"),COL_RIGHT_X,330);
+        hardButton = new XButton(new Texture("core/assets/Hard.png"),COL_RIGHT_X,380);
         hardButton.setClickedImage(new Texture("core/assets/HardClicked.png"));
 
-        humanButton = new XButton(new Texture("core/assets/vsHuman.png"),COL_LEFT_X,450);
+        humanButton = new XButton(new Texture("core/assets/vsHuman.png"),COL_LEFT_X,500);
         humanButton.setClickedImage(new Texture("core/assets/vsHumanClicked.png"));
 
-        AIButton = new XButton(new Texture("core/assets/vsAI.png"),COL_LEFT_X,390);
+        AIButton = new XButton(new Texture("core/assets/vsAI.png"),COL_LEFT_X,440);
         AIButton.setClickedImage(new Texture("core/assets/vsAIClicked.png"));
         AIButton.setClicked(true);
 
@@ -165,6 +171,18 @@ public class MainMenuScreen implements Screen {
 
         backButton = new XButton(new Texture("core/assets/Back.png"),COL_RIGHT_X,175);
         backButton.setClickedImage(new Texture("core/assets/BackClicked.png"));
+
+
+        //other group lol
+        bestOf3 = new XButton(new Texture("core/assets/Bo3.png"),COL_MID_X, 330);
+        bestOf3.setClickedImage(new Texture("core/assets/Bo3Clicked.png"));
+        bestOf3.setClicked(true);
+
+        bestOf5 = new XButton(new Texture("core/assets/Bo5.png"),COL_MID_X, 280);
+        bestOf5.setClickedImage(new Texture("core/assets/Bo5Clicked.png"));
+
+        bestOf7 = new XButton(new Texture("core/assets/Bo7.png"),COL_MID_X, 230);
+        bestOf7.setClickedImage(new Texture("core/assets/Bo7Clicked.png"));
     }
 
     private void setButtonsActions() {
@@ -180,7 +198,7 @@ public class MainMenuScreen implements Screen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 playSingleGameButton.setClicked(false);
                 if( x >= 0 && y >= 0 && x <= playSingleGameButton.getWidth() && y <= playSingleGameButton.getHeight()){
-                    //TODO do button action
+
                     playSingleGameButton.setVisible(false);
                     playKnockoutTournament.setVisible(false);
                     exitButton.setVisible(false);
@@ -195,6 +213,7 @@ public class MainMenuScreen implements Screen {
                     Vortex.setDifficulty(Utils.DIFFICULTY_MEDIUM);
                     Vortex.setPlayer1(Utils.PLAYER_HUMAN);
                     Vortex.setPlayer2(Utils.PLAYER_AI);
+                    Vortex.setBestOf(1);
                 }
                 //((Game) Gdx.app.getApplicationListener()).setScreen(new PlaySingleGameScreen());
 
@@ -213,8 +232,26 @@ public class MainMenuScreen implements Screen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 playKnockoutTournament.setClicked(false);
                 if( x >= 0 && y >= 0 && x <= playKnockoutTournament.getWidth() && y <= playKnockoutTournament.getHeight()){
-                    //TODO do button action
+                    playSingleGameButton.setVisible(false);
+                    playKnockoutTournament.setVisible(false);
+                    exitButton.setVisible(false);
 
+                    easyButton.setVisible(true);
+                    mediumButton.setVisible(true);
+                    hardButton.setVisible(true);
+                    humanButton.setVisible(true);
+                    AIButton.setVisible(true);
+                    playButton.setVisible(true);
+                    backButton.setVisible(true);
+
+                    bestOf3.setVisible(true);
+                    bestOf5.setVisible(true);
+                    bestOf7.setVisible(true);
+
+                    Vortex.setDifficulty(Utils.DIFFICULTY_MEDIUM);
+                    Vortex.setPlayer1(Utils.PLAYER_HUMAN);
+                    Vortex.setPlayer2(Utils.PLAYER_AI);
+                    Vortex.setBestOf(3);
 
                 }
                 //((Game) Gdx.app.getApplicationListener()).setScreen(new PlaySingleGameScreen());
@@ -339,7 +376,6 @@ public class MainMenuScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 if( x >= 0 && y >= 0 && x <= humanButton.getWidth() && y <= humanButton.getHeight()){
-                    //TODO do button action
                     AIButton.setClicked(false);
                     easyButton.setGreyOut(true);
                     mediumButton.setGreyOut(true);
@@ -408,7 +444,6 @@ public class MainMenuScreen implements Screen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 playButton.setClicked(false);
                 if( x >= 0 && y >= 0 && x <= playButton.getWidth() && y <= playButton.getHeight()){
-                    //TODO do button action
 
                     stage.addAction(Actions.sequence(
                             Actions.alpha(1)
@@ -449,6 +484,9 @@ public class MainMenuScreen implements Screen {
                     AIButton.setVisible(false);
                     playButton.setVisible(false);
                     backButton.setVisible(false);
+                    bestOf3.setVisible(false);
+                    bestOf5.setVisible(false);
+                    bestOf7.setVisible(false);
                 }
                 //((Game) Gdx.app.getApplicationListener()).setScreen(new PlaySingleGameScreen());
 
@@ -456,7 +494,77 @@ public class MainMenuScreen implements Screen {
 
         });
 
-        //TODO OTHER BUTTONSSSSSSSSSSSSSSSS
+        bestOf3.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                bestOf3.setClicked(true);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+                if( x >= 0 && y >= 0 && x <= bestOf3.getWidth() && y <= bestOf3.getHeight()){
+                    bestOf5.setClicked(false);
+                    bestOf7.setClicked(false);
+                    Vortex.setBestOf(3);
+                }
+                else {
+                    if(bestOf3.getPreviousClicked())
+                        bestOf3.setClicked(true);
+                    else bestOf3.setClicked(false);
+                }
+            }
+
+        });
+
+        bestOf5.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                bestOf5.setClicked(true);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+                if( x >= 0 && y >= 0 && x <= bestOf5.getWidth() && y <= bestOf5.getHeight()){
+                    bestOf3.setClicked(false);
+                    bestOf7.setClicked(false);
+                    Vortex.setBestOf(5);
+                }
+                else {
+                    if(bestOf5.getPreviousClicked())
+                        bestOf5.setClicked(true);
+                    else bestOf5.setClicked(false);
+                }
+            }
+
+        });
+
+        bestOf7.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                bestOf7.setClicked(true);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+                if( x >= 0 && y >= 0 && x <= bestOf7.getWidth() && y <= bestOf7.getHeight()){
+                    bestOf3.setClicked(false);
+                    bestOf5.setClicked(false);
+                    Vortex.setBestOf(7);
+                }
+                else {
+                    if(bestOf7.getPreviousClicked())
+                        bestOf7.setClicked(true);
+                    else bestOf7.setClicked(false);
+                }
+            }
+
+        });
     }
 
 

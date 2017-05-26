@@ -33,7 +33,7 @@ public class SplashScreen implements Screen{
         stage.addAction(Actions.sequence( //Up to 5 actions; Fade in and then out & switch to Main Menu
                  Actions.alpha(0)
                 ,Actions.fadeIn(1.0f)
-                ,Actions.delay(0.0f) //TODO CHANGE BACK TO 2.0f
+                ,Actions.delay(2.0f) //TODO CHANGE BACK TO 2.0f
                 ,Actions.fadeOut(0.9f)
                 ,Actions.run(new Runnable() {
                     @Override

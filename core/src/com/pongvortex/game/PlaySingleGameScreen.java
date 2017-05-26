@@ -26,14 +26,13 @@ public class PlaySingleGameScreen implements Screen{
 
     @Override
     public void show() {
+        vortex = new Vortex(this);
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         background = new Image (new Texture("core/assets/Background.jpg"));
         backgroundField = new Image (new Texture("core/assets/CircleField.png"));
-        teamScore = new Image(new Texture("core/assets/Score.png"));
-        vortex = new Vortex(this);
 
-        backButton = new XButton(new Texture("core/assets/Back.png"),995.0f,200.0f);
+        backButton = new XButton(new Texture("core/assets/Back.png"),1065.0f,80.0f);
         backButton.setClickedImage(new Texture("core/assets/BackClicked.png"));
         backButton.setVisible(true);
 
@@ -43,6 +42,10 @@ public class PlaySingleGameScreen implements Screen{
         mainMenuButton = new XButton(new Texture("core/assets/MainMenu.png"),640.0f, 50.0f);
         mainMenuButton.setClickedImage(new Texture("core/assets/MainMenuClicked.png"));
 
+        vortex.startVortex();
+
+        if(vortex.currentBestOf ==1) teamScore = new Image(new Texture("core/assets/Score.png"));
+        else teamScore = new Image(new Texture("core/assets/Score2.png"));
 
 
         setButtonActions();
@@ -55,7 +58,6 @@ public class PlaySingleGameScreen implements Screen{
         stage.addActor(playAgainButton);
         stage.addActor(mainMenuButton);
 
-        vortex.startVortex();
 
         //FadeIn when switched to this.
         stage.addAction(Actions.sequence(

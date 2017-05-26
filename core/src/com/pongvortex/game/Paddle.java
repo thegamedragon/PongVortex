@@ -15,6 +15,7 @@ public class Paddle {
     public boolean inGame = false;
     public int paddleColor;
     public int score = 0;
+    public int setScore = 0;
     public int speed = 80;
 
     public Paddle(int paddleType){
