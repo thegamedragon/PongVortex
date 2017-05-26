@@ -41,6 +41,23 @@ public class Vortex extends Actor{
 
     public Image greenScore = new Image(new Texture("core/assets/GREEN/0.png"));
     public Image redScore = new Image (new Texture ("core/assets/RED/0.png"));
+    private Image greenVictory = new Image(new Texture("core/assets/GreenVictoryBlack.png"));
+    private Image redVictory = new Image(new Texture("core/assets/RedVictoryBlack.png"));
+    private PlaySingleGameScreen gameScreen;
+    {
+        redVictory.setVisible(false);
+        greenVictory.setVisible(false);
+        screen = Utils.SCREEN_MENU;
+        setButtonActions();
+    }
+
+    public Vortex(){
+
+    }
+
+    public Vortex(PlaySingleGameScreen gameScreen){
+        this.gameScreen = gameScreen;
+    }
 
     public void startVortex(){
         reset(); //Resets the game to an initial state
@@ -75,6 +92,8 @@ public class Vortex extends Actor{
 
     private void reset(){
         //TODO reset paddles and ball to the default state!! PERHAPS COUNTDOWN?
+
+
     }
 
     static public void setDifficulty(int difficulty_){ difficulty = difficulty_;}
@@ -90,7 +109,19 @@ public class Vortex extends Actor{
         if(currentPlayer1==Utils.PLAYER_HUMAN){
             greenScore.draw(batch,parentAlpha);
             redScore.draw(batch,parentAlpha);
+            if(redVictory.isVisible()) {
+                redVictory.draw(batch,parentAlpha);
+                //gameScreen.playAgainButton.draw(batch,parentAlpha);
+                //gameScreen.mainMenuButton.draw(batch, parentAlpha);
+            }
+            if(greenVictory.isVisible()){
+                greenVictory.draw(batch,parentAlpha);
+                //gameScreen.playAgainButton.draw(batch,parentAlpha);
+                //gameScreen.mainMenuButton.draw(batch, parentAlpha);
+            }
+
         }
+
     }
 
     @Override
@@ -122,7 +153,7 @@ public class Vortex extends Actor{
                         ,Actions.run(new Runnable() {
                             @Override
                             public void run() {
-                                start();
+                                if(screen != Utils.SCREEN_VICTORY) start();
                             }
                         })
                 ));
@@ -132,12 +163,25 @@ public class Vortex extends Actor{
 
     public void setScore(){
         if(ball.ballColor==Utils.GREEN){
-            greenPaddle.score++;
+            if(currentPlayer1==Utils.PLAYER_HUMAN) greenPaddle.score++;
             greenScore.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/GREEN/"+greenPaddle.score+".png"))));
         }
-        else{
-            redPaddle.score++;
+        else if(ball.ballColor==Utils.RED){
+            if(currentPlayer1==Utils.PLAYER_HUMAN) redPaddle.score++;
             redScore.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture("core/assets/RED/"+redPaddle.score+".png"))));
+        }
+        if(greenPaddle.score == 11){
+            greenVictory.setVisible(true);
+            screen = Utils.SCREEN_VICTORY;
+            gameScreen.playAgainButton.setVisible(true);
+            gameScreen.mainMenuButton.setVisible(true);
+
+        }
+        else if (redPaddle.score == 11){
+            redVictory.setVisible(true);
+            screen = Utils.SCREEN_VICTORY;
+            gameScreen.playAgainButton.setVisible(true);
+            gameScreen.mainMenuButton.setVisible(true);
         }
 //        System.out.println("GREEN : " + greenPaddle.score + " - " + redPaddle.score + " : RED\n");
     }
@@ -306,6 +350,9 @@ public class Vortex extends Actor{
     }
     void start(){
         // START BILA
+        if(screen == Utils.SCREEN_VICTORY) return;
+
+
         ball.inGame = true;
         redPaddle.inGame = true;
         greenPaddle.inGame = true;
@@ -321,5 +368,11 @@ public class Vortex extends Actor{
         changeRandom = true;
         targetAngleRed = 180.0f;
         targetAngleGreen = 0.0f;
+    }
+
+    public void setButtonActions(){
+
+
+
     }
 }

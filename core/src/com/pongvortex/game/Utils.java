@@ -12,4 +12,5 @@ public interface Utils {
     int GREEN = 8;
     int RED = 9;
     int SCREEN_MENU = 10;
+    int SCREEN_VICTORY = 11;
 }

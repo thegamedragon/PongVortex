@@ -14,7 +14,7 @@ public class Paddle {
     public float angle = 360.0f; //in degrees
     public boolean inGame = false;
     public int paddleColor;
-    public int score=0;
+    public int score = 0;
     public int speed = 80;
 
     public Paddle(int paddleType){

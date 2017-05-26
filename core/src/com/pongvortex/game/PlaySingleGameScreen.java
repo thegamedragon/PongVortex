@@ -21,6 +21,8 @@ public class PlaySingleGameScreen implements Screen{
     private Vortex vortex;
     private Image teamScore;
     private XButton backButton;
+    public XButton playAgainButton;
+    public XButton mainMenuButton;
 
     @Override
     public void show() {
@@ -29,19 +31,29 @@ public class PlaySingleGameScreen implements Screen{
         background = new Image (new Texture("core/assets/Background.jpg"));
         backgroundField = new Image (new Texture("core/assets/CircleField.png"));
         teamScore = new Image(new Texture("core/assets/Score.png"));
-        vortex = new Vortex();
+        vortex = new Vortex(this);
 
         backButton = new XButton(new Texture("core/assets/Back.png"),995.0f,200.0f);
         backButton.setClickedImage(new Texture("core/assets/BackClicked.png"));
         backButton.setVisible(true);
 
+        playAgainButton = new XButton(new Texture("core/assets/PlayAgain.png"),640.0f, 100.0f);
+        playAgainButton.setClickedImage(new Texture("core/assets/PlayAgainClicked.png"));
+
+        mainMenuButton = new XButton(new Texture("core/assets/MainMenu.png"),640.0f, 50.0f);
+        mainMenuButton.setClickedImage(new Texture("core/assets/MainMenuClicked.png"));
+
+
+
         setButtonActions();
 
         stage.addActor(background);
         stage.addActor(backgroundField);
-        stage.addActor(vortex);
         stage.addActor(teamScore);
         stage.addActor(backButton);
+        stage.addActor(vortex);
+        stage.addActor(playAgainButton);
+        stage.addActor(mainMenuButton);
 
         vortex.startVortex();
 
@@ -113,6 +125,62 @@ public class PlaySingleGameScreen implements Screen{
                 }
                 //((Game) Gdx.app.getApplicationListener()).setScreen(new PlaySingleGameScreen());
             }
+        });
+
+        playAgainButton.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                playAgainButton.setClicked(true);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                playAgainButton.setClicked(false);
+                if( x >= 0 && y >= 0 && x <= playAgainButton.getWidth() && y <= playAgainButton.getHeight()){
+                    stage.addAction(Actions.sequence(
+                            Actions.alpha(1)
+                            ,Actions.fadeOut(0.75f)
+                            ,Actions.run(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ((Game) Gdx.app.getApplicationListener()).setScreen(new PlaySingleGameScreen());
+                                }
+                            })
+                    ));
+                }
+                //((Game) Gdx.app.getApplicationListener()).setScreen(new PlaySingleGameScreen());
+
+            }
+
+        });
+
+        mainMenuButton.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                mainMenuButton.setClicked(true);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                mainMenuButton.setClicked(false);
+                if( x >= 0 && y >= 0 && x <= mainMenuButton.getWidth() && y <= mainMenuButton.getHeight()){
+                    stage.addAction(Actions.sequence(
+                             Actions.alpha(1)
+                            ,Actions.fadeOut(0.75f)
+                            ,Actions.run(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen());
+                                }
+                            })
+                    ));
+                }
+                //((Game) Gdx.app.getApplicationListener()).setScreen(new PlaySingleGameScreen());
+
+            }
+
         });
     }
 }
